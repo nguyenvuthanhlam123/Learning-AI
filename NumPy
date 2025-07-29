@@ -1,0 +1,23 @@
+import numpy as np
+# Tạo mảng một chiều
+arr_1d = np.array([1, 2, 3, 4, 5])
+print(f"Mảng 1D: {arr_1d}")
+
+# Tạo mảng hai chiều (ma trận)
+arr_2d = np.array([[1, 2, 3], [4, 5, 6]])
+print(f"Mảng 2D:\n{arr_2d}")
+
+# Các thuộc tính quan trọng
+print(f"Kích thước: {arr_2d.shape}")
+print(f"Số chiều: {arr_2d.ndim}")
+print(f"Kiểu dữ liệu: {arr_2d.dtype}")
+
+# Broadcasting - cộng 10 vào tất cả phần tử
+result = arr_2d + 10
+print(f"Sau khi cộng 10:\n{result}")
+
+# Phép toán giữa các mảng
+arr_a = np.array([[1, 2], [3, 4]])
+arr_b = np.array([[5, 6], [7, 8]])
+tich = np.dot(arr_a, arr_b)
+print(f"Tích ma trận:\n{tich}")
