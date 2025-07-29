@@ -1,0 +1,89 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
+
+# Tạo dữ liệu bán hàng mô phỏng
+np.random.seed(42)  # Để có kết quả nhất quán
+
+# Tạo danh sách sản phẩm
+san_pham = ['Điện thoại', 'Laptop', 'Tai nghe', 'Chuột', 'Bàn phím']
+gia_san_pham = [15000000, 25000000, 2000000, 500000, 1500000]
+
+# Tạo 1000 giao dịch trong 30 ngày
+so_giao_dich = 1000
+ngay_bat_dau = datetime.now() - timedelta(days=30)
+
+du_lieu_ban_hang = []
+for i in range(so_giao_dich):
+    ngay = ngay_bat_dau + timedelta(days=np.random.randint(0, 30))
+    san_pham_chon = np.random.choice(san_pham)
+    gia = gia_san_pham[san_pham.index(san_pham_chon)]
+    so_luong = np.random.randint(1, 5)
+    thanh_tien = gia * so_luong
+    
+    du_lieu_ban_hang.append({
+        'Ngay': ngay,
+        'San_pham': san_pham_chon,
+        'Gia': gia,
+        'So_luong': so_luong,
+        'Thanh_tien': thanh_tien
+    })
+
+# Tạo DataFrame
+df_ban_hang = pd.DataFrame(du_lieu_ban_hang)
+print("Mẫu dữ liệu bán hàng:")
+print(df_ban_hang.head())
+
+# Thống kê tổng quan
+print("\n=== THỐNG KÊ TỔNG QUAN ===")
+print(f"Tổng số giao dịch: {len(df_ban_hang)}")
+print(f"Tổng doanh thu: {df_ban_hang['Thanh_tien'].sum():,} VNĐ")
+print(f"Doanh thu trung bình mỗi giao dịch: {df_ban_hang['Thanh_tien'].mean():,.0f} VNĐ")
+
+# Phân tích theo sản phẩm
+print("\n=== PHÂN TÍCH THEO SẢN PHẨM ===")
+thong_ke_san_pham = df_ban_hang.groupby('San_pham').agg({
+    'So_luong': 'sum',
+    'Thanh_tien': 'sum'
+}).round(2)
+thong_ke_san_pham = thong_ke_san_pham.sort_values('Thanh_tien', ascending=False)
+print(thong_ke_san_pham)
+
+# Tìm sản phẩm bán chạy nhất
+san_pham_ban_chay = thong_ke_san_pham.index[0]
+print(f"\nSản phẩm bán chạy nhất: {san_pham_ban_chay}")
+
+# Tạo biểu đồ phân tích
+fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+fig.suptitle('Báo cáo phân tích dữ liệu bán hàng', fontsize=16)
+
+# 1. Biểu đồ doanh thu theo sản phẩm
+axes[0, 0].bar(thong_ke_san_pham.index, thong_ke_san_pham['Thanh_tien'])
+axes[0, 0].set_title('Doanh thu theo sản phẩm')
+axes[0, 0].set_xlabel('Sản phẩm')
+axes[0, 0].set_ylabel('Doanh thu (VNĐ)')
+axes[0, 0].tick_params(axis='x', rotation=45)
+
+# 2. Biểu đồ tròn thị phần
+axes[0, 1].pie(thong_ke_san_pham['Thanh_tien'], labels=thong_ke_san_pham.index, autopct='%1.1f%%')
+axes[0, 1].set_title('Thị phần theo doanh thu')
+
+# 3. Biểu đồ số lượng bán ra
+axes[1, 0].bar(thong_ke_san_pham.index, thong_ke_san_pham['So_luong'], color='green')
+axes[1, 0].set_title('Số lượng bán ra theo sản phẩm')
+axes[1, 0].set_xlabel('Sản phẩm')
+axes[1, 0].set_ylabel('Số lượng')
+axes[1, 0].tick_params(axis='x', rotation=45)
+
+# 4. Biểu đồ doanh thu theo ngày
+df_ban_hang['Ngay_chi'] = df_ban_hang['Ngay'].dt.date
+doanh_thu_theo_ngay = df_ban_hang.groupby('Ngay_chi')['Thanh_tien'].sum()
+axes[1, 1].plot(doanh_thu_theo_ngay.index, doanh_thu_theo_ngay.values, marker='o')
+axes[1, 1].set_title('Doanh thu theo ngày')
+axes[1, 1].set_xlabel('Ngày')
+axes[1, 1].set_ylabel('Doanh thu (VNĐ)')
+axes[1, 1].tick_params(axis='x', rotation=45)
+
+plt.tight_layout()
+plt.show()
