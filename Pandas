@@ -1,0 +1,23 @@
+import pandas as pd
+
+# Tạo DataFrame từ dictionary
+data = {
+    'Ten': ['An', 'Binh', 'Chinh', 'Dung'],
+    'Tuoi': [25, 30, 35, 28],
+    'Luong': [15000000, 25000000, 35000000, 20000000],
+    'Thanh_pho': ['Ha Noi', 'TP.HCM', 'Da Nang', 'Ha Noi']
+}
+
+df = pd.DataFrame(data)
+print("Bảng dữ liệu nhân viên:")
+print(df)
+
+# Lọc nhân viên ở Hà Nội
+nhan_vien_ha_noi = df[df['Thanh_pho'] == 'Ha Noi']
+print("\nNhân viên ở Hà Nội:")
+print(nhan_vien_ha_noi)
+
+# Tính lương trung bình theo thành phố
+luong_tb_theo_tp = df.groupby('Thanh_pho')['Luong'].mean()
+print("\nLương trung bình theo thành phố:")
+print(luong_tb_theo_tp)
