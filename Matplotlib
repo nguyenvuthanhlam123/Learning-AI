@@ -1,0 +1,15 @@
+import matplotlib.pyplot as plt
+import numpy as np
+# Tạo dữ liệu mẫu
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+# Tạo biểu đồ
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, label='sin(x)', color='blue', linewidth=2)
+plt.title('Biểu đồ hàm sin(x)', fontsize=16)
+plt.xlabel('x', fontsize=12)
+plt.ylabel('sin(x)', fontsize=12)
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()

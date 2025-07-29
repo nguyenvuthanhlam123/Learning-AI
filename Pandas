@@ -1,5 +1,6 @@
 import pandas as pd
-
+import matplotlib.pyplot as plt
+import numpy as np
 # Tạo DataFrame từ dictionary
 data = {
     'Ten': ['An', 'Binh', 'Chinh', 'Dung'],
@@ -21,3 +22,14 @@ print(nhan_vien_ha_noi)
 luong_tb_theo_tp = df.groupby('Thanh_pho')['Luong'].mean()
 print("\nLương trung bình theo thành phố:")
 print(luong_tb_theo_tp)
+
+# Biểu đồ cột cho dữ liệu lương
+plt.figure(figsize=(10, 6))
+plt.bar(df['Ten'], df['Luong'], color=['red', 'green', 'blue', 'orange'])
+plt.title('Lương của các nhân viên', fontsize=16)
+plt.xlabel('Tên nhân viên', fontsize=12)
+plt.ylabel('Lương (VNĐ)', fontsize=12)
+plt.xticks(rotation=45)
+plt.ticklabel_format(style='plain', axis='y')
+plt.tight_layout()
+plt.show()
