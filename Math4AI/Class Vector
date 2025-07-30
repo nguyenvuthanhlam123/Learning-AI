@@ -1,0 +1,30 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from typing import List, Union
+
+class Vector:
+    """
+    Lớp Vector tự cài đặt với các phép toán cơ bản
+    """
+
+    def __init__(self, elements: List[float]):
+        """
+        Khởi tạo vector từ danh sách các phần tử
+        """
+        self.elements = np.array(elements, dtype=float)
+        self.dimension = len(elements)
+    
+    def __str__(self): #Hàm chuyển đổi đối tượng thành chỗ
+        return f"Vector({self.elements.tolist()})"
+    
+    def __add__(self, other): 
+        """Phép cộng vector"""
+        if self.dimension != other.dimension:
+            raise ValueError("Hai vector phải có cùng chiều")
+        return Vector((self.elements + other.elements).tolist())
+    
+    def __sub__(self, other):
+        """Phép trừ vector"""
+        if self.dimension != other.dimension:
+            raise ValueError("Hai vector phải có cùng chiều")
+        return Vector((self.elements - other.elements).tolist())
