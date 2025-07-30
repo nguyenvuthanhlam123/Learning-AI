@@ -1,0 +1,31 @@
+import numpy as np
+
+# Ví dụ: f(x) = sin(x²), g(x) = x², h(x) = sin(x)
+# f(x) = h(g(x))
+
+def g(x):
+    return x**2
+
+def h(x):
+    return np.sin(x)
+
+def f(x):
+    return h(g(x))
+
+# Đạo hàm theo quy tắc chuỗi
+def dao_ham_f(x):
+    return np.cos(g(x)) * 2*x  # h'(g(x)) * g'(x)
+
+def dao_ham_so(ham_so, x, h=1e-7):
+    """
+    Tính đạo hàm số bằng phương pháp sai phân hữu hạn
+    """
+    return (ham_so(x + h) - ham_so(x - h)) / (2 * h)
+
+# Kiểm tra
+x_values = np.linspace(-2, 2, 5) #Từ -2 tới 2, bước nhảy 5
+print("Kiểm tra quy tắc chuỗi:")
+for x in x_values:
+    dao_ham_giai_tich = dao_ham_f(x)
+    dao_ham_so_tinh = dao_ham_so(f, x)
+    print(f"x = {x:.1f}: Giải tích = {dao_ham_giai_tich:.4f}, Số = {dao_ham_so_tinh:.4f}")
