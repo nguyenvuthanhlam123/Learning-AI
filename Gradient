@@ -1,0 +1,29 @@
+import numpy as np
+#Gradient là mở rộng của đạo hàm cho hàm nhiều biến. Nó trỏ về hướng tăng nhanh nhất của hàm số. 
+#Trong machine learning, chúng ta sử dụng gradient để tìm hướng giảm loss function nhanh nhất.
+
+# Hàm hai biến: f(x,y) = x² + y² + 2xy
+def ham_hai_bien(x, y):
+    return x**2 + y**2 + 2*x*y
+
+# Gradient giải tích
+def gradient_giai_tich(x, y):
+    df_dx = 2*x + 2*y
+    df_dy = 2*y + 2*x
+    return np.array([df_dx, df_dy])
+
+# Tính gradient bằng số
+def gradient_so(ham_so, x, y, h=1e-7):
+    df_dx = (ham_so(x + h, y) - ham_so(x - h, y)) / (2 * h)
+    df_dy = (ham_so(x, y + h) - ham_so(x, y - h)) / (2 * h)
+    return np.array([df_dx, df_dy])
+
+# Kiểm tra
+x_test, y_test = 1.0, 2.0
+grad_thuc = gradient_giai_tich(x_test, y_test)
+grad_so = gradient_so(ham_hai_bien, x_test, y_test)
+
+print(f"Tại điểm ({x_test}, {y_test}):")
+print(f"Gradient thực tế: {grad_thuc}")
+print(f"Gradient tính bằng số: {grad_so}")
+print(f"Sai số: {np.linalg.norm(grad_thuc - grad_so)}")
