@@ -1,0 +1,53 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Định nghĩa hàm số và đạo hàm
+def ham_so(x):
+    return x**2 + 2*x + 1
+
+def dao_ham(x):
+    return 2*x + 2
+
+# Tạo dữ liệu để vẽ đồ thị
+x = np.linspace(-3, 1, 100)
+y = ham_so(x)
+
+# Vẽ đồ thị hàm số
+plt.figure(figsize=(12, 5))
+
+plt.subplot(1, 2, 1)
+plt.plot(x, y, 'b-', linewidth=2, label='f(x) = x² + 2x + 1')
+plt.title('Hàm số gốc')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.grid(True, alpha=0.3)
+plt.legend()
+
+# Vẽ đồ thị đạo hàm
+plt.subplot(1, 2, 2)
+plt.plot(x, dao_ham(x), 'r-', linewidth=2, label="f'(x) = 2x + 2")
+plt.title('Đạo hàm')
+plt.xlabel('x')
+plt.ylabel("f'(x)")
+plt.grid(True, alpha=0.3)
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+def dao_ham_so(ham_so, x, h=1e-7):
+    """
+    Tính đạo hàm số bằng phương pháp sai phân hữu hạn
+    """
+    return (ham_so(x + h) - ham_so(x - h)) / (2 * h)
+
+# Kiểm tra với hàm số đã biết
+x_test = 1.0
+dao_ham_thuc = dao_ham(x_test) #Tính theo biểu thức giải tích có sẵn
+dao_ham_so_tinh = dao_ham_so(ham_so, x_test)
+
+print(f"Tại x = {x_test}:")
+print(f"Đạo hàm thực tế: {dao_ham_thuc}")
+print(f"Đạo hàm tính bằng số: {dao_ham_so_tinh}")
+print(f"Sai số: {abs(dao_ham_thuc - dao_ham_so_tinh)}")
+
