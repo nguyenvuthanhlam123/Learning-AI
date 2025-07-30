@@ -1,0 +1,55 @@
+import numpy as np
+# Tạo ma trận 3x3
+ma_tran = np.array([[1, 2, 3], 
+                    [4, 5, 6], 
+                    [7, 8, 9]])
+print(f"Ma trận gốc:\n{ma_tran}")
+
+# Chuyển vị ma trận
+ma_tran_chuyen_vi = ma_tran.T
+print(f"Ma trận chuyển vị:\n{ma_tran_chuyen_vi}")
+
+# Nhân ma trận
+vector_input = np.array([1, 2, 3])
+ket_qua = np.dot(ma_tran, vector_input)
+print(f"Kết quả nhân ma trận với vectơ: {ket_qua}")
+
+# Tính định thức
+dinh_thuc = np.linalg.det(ma_tran)
+print(f"Định thức: {dinh_thuc}")
+
+# Tạo ma trận khả nghịch
+ma_tran_kha_nghich = np.array([[2, 1], 
+                               [1, 3]])
+print(f"Ma trận khả nghịch:\n{ma_tran_kha_nghich}")
+
+# Tính ma trận nghịch đảo
+ma_tran_nghich_dao = np.linalg.inv(ma_tran_kha_nghich)
+print(f"Ma trận nghịch đảo:\n{ma_tran_nghich_dao}")
+
+# Kiểm tra: A * A^(-1) = I
+kiem_tra = np.dot(ma_tran_kha_nghich, ma_tran_nghich_dao)
+print(f"Kiểm tra (gần bằng ma trận đơn vị):\n{kiem_tra}")
+
+# Tạo ma trận đối xứng
+ma_tran_doi_xung = np.array([[4, 2], 
+                             [2, 1]])
+
+# Tính giá trị riêng và vectơ riêng
+gia_tri_rieng, vector_rieng = np.linalg.eig(ma_tran_doi_xung)
+
+print(f"Giá trị riêng: {gia_tri_rieng}")
+print(f"Vectơ riêng:\n{vector_rieng}")
+
+# Kiểm tra: A * v = λ * v
+for i in range(len(gia_tri_rieng)): #Số lượng giá trị riêng, ở ví dụ này là 2
+    v = vector_rieng[:, i]
+    lambda_val = gia_tri_rieng[i]
+    
+    ben_trai = np.dot(ma_tran_doi_xung, v)
+    ben_phai = lambda_val * v
+    
+    print(f"Kiểm tra vectơ riêng {i+1}:")
+    print(f"A * v = {ben_trai}")
+    print(f"λ * v = {ben_phai}")
+    print(f"Sai số: {np.allclose(ben_trai, ben_phai)}")
