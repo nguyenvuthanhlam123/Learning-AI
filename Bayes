@@ -1,0 +1,24 @@
+# Ví dụ thực tế: Chẩn đoán bệnh
+# P(Bệnh) = 0.01 (1% dân số mắc bệnh)
+# P(Test dương tính | Bệnh) = 0.99 (test chính xác 99% khi có bệnh)
+# P(Test dương tính | Không bệnh) = 0.05 (test sai 5% khi không bệnh)
+# Mệnh đề A là bị bệnh, mệnh đề B là test dương tính
+# Công thức Bayes: P(A|B) = P(B|A) * P(A) / P(B)
+def dinh_ly_bayes(P_A, P_B_given_A, P_B_given_not_A):
+    """
+    Tính P(A|B) theo định lý Bayes
+    """
+    P_not_A = 1 - P_A
+    P_B = P_B_given_A * P_A + P_B_given_not_A * P_not_A
+    P_A_given_B = (P_B_given_A * P_A) / P_B
+    return P_A_given_B
+
+# Áp dụng
+P_benh = 0.01
+P_duong_tinh_khi_benh = 0.99
+P_duong_tinh_khi_khong_benh = 0.05
+
+P_benh_khi_duong_tinh = dinh_ly_bayes(P_benh, P_duong_tinh_khi_benh, P_duong_tinh_khi_khong_benh)
+
+print(f"Xác suất có bệnh khi test dương tính: {P_benh_khi_duong_tinh:.4f}")
+print(f"Tức là {P_benh_khi_duong_tinh*100:.2f}%")

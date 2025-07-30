@@ -1,0 +1,33 @@
+from scipy import stats
+import matplotlib.pyplot as plt
+import numpy as np
+# Tạo dữ liệu cho phân phối chuẩn
+mu, sigma = 0, 1  # trung bình và độ lệch chuẩn
+x = np.linspace(-4, 4, 1000)
+y_chuan = stats.norm.pdf(x, mu, sigma)
+
+# Tạo dữ liệu cho phân phối đồng đều
+a, b = -2, 2  # khoảng [a, b]
+y_dong_deu = stats.uniform.pdf(x, a, b-a)
+
+# Vẽ đồ thị
+plt.figure(figsize=(12, 5))
+
+plt.subplot(1, 2, 1)
+plt.plot(x, y_chuan, 'b-', linewidth=2, label='Phân phối chuẩn')
+plt.title('Phân phối chuẩn (μ=0, σ=1)')
+plt.xlabel('x')
+plt.ylabel('Mật độ xác suất')
+plt.grid(True, alpha=0.3)
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(x, y_dong_deu, 'r-', linewidth=2, label='Phân phối đồng đều')
+plt.title('Phân phối đồng đều [-2, 2]')
+plt.xlabel('x')
+plt.ylabel('Mật độ xác suất')
+plt.grid(True, alpha=0.3)
+plt.legend()
+
+plt.tight_layout()
+plt.show()
