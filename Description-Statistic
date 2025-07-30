@@ -1,0 +1,29 @@
+import numpy as np
+import matplotlib.pyplot as plt
+# Tạo dữ liệu mẫu
+np.random.seed(42)
+du_lieu = np.random.normal(50, 15, 1000)  # trung bình 50, độ lệch chuẩn 15
+
+# Tính các chỉ số thống kê
+trung_binh = np.mean(du_lieu)
+trung_vi = np.median(du_lieu)
+phuong_sai = np.var(du_lieu)
+do_lech_chuan = np.std(du_lieu)
+
+print(f"Thống kê mô tả:")
+print(f"Trung bình: {trung_binh:.2f}")
+print(f"Trung vị: {trung_vi:.2f}")
+print(f"Phương sai: {phuong_sai:.2f}")
+print(f"Độ lệch chuẩn: {do_lech_chuan:.2f}")
+
+# Vẽ histogram
+plt.figure(figsize=(10, 6))
+plt.hist(du_lieu, bins=50, density=True, alpha=0.7, color='skyblue', edgecolor='black')
+plt.axvline(trung_binh, color='red', linestyle='--', linewidth=2, label=f'Trung bình = {trung_binh:.1f}')
+plt.axvline(trung_vi, color='green', linestyle='--', linewidth=2, label=f'Trung vị = {trung_vi:.1f}')
+plt.title('Phân phối dữ liệu')
+plt.xlabel('Giá trị')
+plt.ylabel('Mật độ')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()
