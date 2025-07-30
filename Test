@@ -87,3 +87,11 @@ axes[1, 1].tick_params(axis='x', rotation=45)
 
 plt.tight_layout()
 plt.show()
+
+# Lưu dữ liệu và kết quả
+df_ban_hang.to_csv('du_lieu_ban_hang.csv', index=False)
+print("Đã lưu dữ liệu vào file 'du_lieu_ban_hang.csv'")
+
+# Lưu biểu đồ
+plt.savefig('bao_cao_ban_hang.png', dpi=300, bbox_inches='tight')
+print("Đã lưu biểu đồ vào file 'bao_cao_ban_hang.png'")
